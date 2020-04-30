@@ -30,6 +30,11 @@ class Category
      */
     private $articles;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\FavoriteCategories", mappedBy="category", cascade={"persist", "remove"})
+     */
+    private $favoriteCategories;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -79,6 +84,18 @@ class Category
                 $article->setIdCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFavorite(): ?FavoriteCategories
+    {
+        return $this->favorite;
+    }
+
+    public function setFavorite(FavoriteCategories $favorite): self
+    {
+        $this->favorite = $favorite;
 
         return $this;
     }

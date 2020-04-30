@@ -30,6 +30,11 @@ class Source
      */
     private $articles;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\FavoriteSources", mappedBy="source", cascade={"persist", "remove"})
+     */
+    private $favoriteSources;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -79,6 +84,18 @@ class Source
                 $article->setIdSource(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFavorite(): ?FavoriteSources
+    {
+        return $this->favorite;
+    }
+
+    public function setFavorite(FavoriteSources $favorite): self
+    {
+        $this->favorite = $favorite;
 
         return $this;
     }
