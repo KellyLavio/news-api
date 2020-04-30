@@ -33,7 +33,7 @@ class Source
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\FavoriteSources", mappedBy="source", cascade={"persist", "remove"})
      */
-    private $favoriteSources;
+    private $favorite;
 
     public function __construct()
     {
@@ -69,7 +69,7 @@ class Source
     {
         if (!$this->articles->contains($article)) {
             $this->articles[] = $article;
-            $article->setIdSource($this);
+            $article->setSource($this);
         }
 
         return $this;
@@ -80,8 +80,8 @@ class Source
         if ($this->articles->contains($article)) {
             $this->articles->removeElement($article);
             // set the owning side to null (unless already changed)
-            if ($article->getIdSource() === $this) {
-                $article->setIdSource(null);
+            if ($article->getSource() === $this) {
+                $article->setSource(null);
             }
         }
 

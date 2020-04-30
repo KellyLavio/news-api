@@ -138,7 +138,7 @@ class User
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
-            $comment->setIdUser($this);
+            $comment->setUser($this);
         }
 
         return $this;
@@ -149,8 +149,8 @@ class User
         if ($this->comments->contains($comment)) {
             $this->comments->removeElement($comment);
             // set the owning side to null (unless already changed)
-            if ($comment->getIdUser() === $this) {
-                $comment->setIdUser(null);
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
             }
         }
 
@@ -169,7 +169,7 @@ class User
     {
         if (!$this->favorites->contains($favorite)) {
             $this->favorites[] = $favorite;
-            $favorite->addIdUser($this);
+            $favorite->addUser($this);
         }
 
         return $this;
@@ -179,7 +179,7 @@ class User
     {
         if ($this->favorites->contains($favorite)) {
             $this->favorites->removeElement($favorite);
-            $favorite->removeIdUser($this);
+            $favorite->removeUser($this);
         }
 
         return $this;

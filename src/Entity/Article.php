@@ -53,13 +53,13 @@ class Article
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
      */
-    private $idCategory;
+    private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Source", inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idSource;
+    private $source;
 
     public function __construct()
     {
@@ -143,7 +143,7 @@ class Article
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
-            $comment->setIdArticle($this);
+            $comment->setArticle($this);
         }
 
         return $this;
@@ -154,34 +154,34 @@ class Article
         if ($this->comments->contains($comment)) {
             $this->comments->removeElement($comment);
             // set the owning side to null (unless already changed)
-            if ($comment->getIdArticle() === $this) {
-                $comment->setIdArticle(null);
+            if ($comment->getArticle() === $this) {
+                $comment->setArticle(null);
             }
         }
 
         return $this;
     }
 
-    public function getIdCategory(): ?Category
+    public function getCategory(): ?Category
     {
-        return $this->idCategory;
+        return $this->category;
     }
 
-    public function setIdCategory(?Category $idCategory): self
+    public function setCategory(?Category $category): self
     {
-        $this->idCategory = $idCategory;
+        $this->category = $category;
 
         return $this;
     }
 
-    public function getIdSource(): ?Source
+    public function getSource(): ?Source
     {
-        return $this->idSource;
+        return $this->source;
     }
 
-    public function setIdSource(?Source $idSource): self
+    public function setSource(?Source $source): self
     {
-        $this->idSource = $idSource;
+        $this->source = $source;
 
         return $this;
     }

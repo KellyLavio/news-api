@@ -29,7 +29,7 @@ abstract class Favorite
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="favorites")
      */
-    private $idUser;
+    private $user;
 
     public function __construct()
     {
@@ -44,24 +44,24 @@ abstract class Favorite
     /**
      * @return Collection|User[]
      */
-    public function getIdUser(): Collection
+    public function getUser(): Collection
     {
-        return $this->idUser;
+        return $this->user;
     }
 
-    public function addIdUser(User $idUser): self
+    public function addUser(User $user): self
     {
-        if (!$this->idUser->contains($idUser)) {
-            $this->idUser[] = $idUser;
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
         }
 
         return $this;
     }
 
-    public function removeIdUser(User $idUser): self
+    public function removeUser(User $user): self
     {
-        if ($this->idUser->contains($idUser)) {
-            $this->idUser->removeElement($idUser);
+        if ($this->user->contains($user)) {
+            $this->user->removeElement($user);
         }
 
         return $this;

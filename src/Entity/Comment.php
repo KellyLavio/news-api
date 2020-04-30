@@ -32,13 +32,13 @@ class Comment
      * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idArticle;
+    private $article;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idUser;
+    private $user;
 
     public function getId(): ?int
     {
@@ -69,26 +69,26 @@ class Comment
         return $this;
     }
 
-    public function getIdArticle(): ?Article
+    public function getArticle(): ?Article
     {
-        return $this->idArticle;
+        return $this->article;
     }
 
-    public function setIdArticle(?Article $idArticle): self
+    public function setArticle(?Article $article): self
     {
-        $this->idArticle = $idArticle;
+        $this->article = $article;
 
         return $this;
     }
 
-    public function getIdUser(): ?User
+    public function getUser(): ?User
     {
-        return $this->idUser;
+        return $this->user;
     }
 
-    public function setIdUser(?User $idUser): self
+    public function setUser(?User $user): self
     {
-        $this->idUser = $idUser;
+        $this->user = $user;
 
         return $this;
     }

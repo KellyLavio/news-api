@@ -33,7 +33,7 @@ class Category
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\FavoriteCategories", mappedBy="category", cascade={"persist", "remove"})
      */
-    private $favoriteCategories;
+    private $favorite;
 
     public function __construct()
     {
@@ -69,7 +69,7 @@ class Category
     {
         if (!$this->articles->contains($article)) {
             $this->articles[] = $article;
-            $article->setIdCategory($this);
+            $article->setCategory($this);
         }
 
         return $this;
@@ -80,8 +80,8 @@ class Category
         if ($this->articles->contains($article)) {
             $this->articles->removeElement($article);
             // set the owning side to null (unless already changed)
-            if ($article->getIdCategory() === $this) {
-                $article->setIdCategory(null);
+            if ($article->getCategory() === $this) {
+                $article->setCategory(null);
             }
         }
 
