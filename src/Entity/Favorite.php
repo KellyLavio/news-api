@@ -12,9 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\FavoriteRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DicriminatorMap({
+ * @ORM\DiscriminatorMap({
  *  "category" = "FavoriteCategories",
- * "source" = "FavoriteSource"
+ * "source" = "FavoriteSources"
  * })
  */
 abstract class Favorite
