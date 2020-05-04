@@ -12,9 +12,17 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
@@ -89,6 +97,20 @@ class AppFixtures extends Fixture
         
         $users = [];
     
+        $admin = new User();
+        $admin->setName("First")
+                ->setFirstname("Adam")
+                ->setEmail("adam.first@gmail.com")
+                ->setLogin("Adam1")
+                ->setRoles(['ROLE_ADMIN'])
+                ->setPassword($this->encoder->encodePassword(
+                    $admin,
+                    'AdamFirst'))
+                ->addFavorite($favoriteSources[$faker->numberBetween(0, count($favoriteSources) - 1)])
+                ->addFavorite($favoriteCategories[$faker->numberBetween(0, count($favoriteCategories) - 1)]);
+
+                $manager->persist($admin);
+                
         
         for ($i= 0; $i < 5; $i++) {
             $user = new User();
@@ -96,10 +118,13 @@ class AppFixtures extends Fixture
                 ->setFirstname($faker->firstName)
                 ->setEmail($faker->email)
                 ->setLogin($faker->userName)
-                ->setPassword($faker->password)
+                ->setPassword($this->encoder->encodePassword(
+                    $user,
+                    $faker->password))
                 ->addFavorite($favoriteSources[$faker->numberBetween(0, count($favoriteSources) - 1)])
                 ->addFavorite($favoriteCategories[$faker->numberBetween(0, count($favoriteCategories) - 1)]);
                 
+            
 
             $manager->persist($user);
             $users[]= $user;
