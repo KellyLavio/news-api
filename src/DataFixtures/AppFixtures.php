@@ -18,7 +18,7 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        $categories = [];
+        $categories=[];
         $categorieNames = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
 
         for ($i = 0; $i < count($categorieNames); $i++) {
@@ -26,6 +26,8 @@ class AppFixtures extends Fixture
             $category->setName($categorieNames[$i]);
 
             $manager->persist($category);
+
+            $categories[] = $category;
         }
 
 
@@ -47,11 +49,13 @@ class AppFixtures extends Fixture
         $sources = [];
         $sourceNames = ['huffington-post', 'bfm', 'lci'];
 
-        for ($i = 0; $i < (count($sourceNames) - 1); $i++) {
+        for ($i = 0; $i < count($sourceNames); $i++) {
             $source = new Source();
             $source->setName($sourceNames[$i]);
 
             $manager->persist($source);
+
+            $sources[] = $source;
         }
 
 
@@ -64,25 +68,25 @@ class AppFixtures extends Fixture
                     ->setDescription($faker->paragraph($faker->numberBetween(1,10)))
                     ->setTitle($faker->words($faker->numberBetween(1,5), true))
                     ->setDate($faker->dateTime)
-                    ->setCategory($category)
-                    ->setSource($source);
+                    ->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)])
+                    ->setSource($sources[$faker->numberBetween(0, count($sources) - 1)]);
             
             $manager->persist($article);
 
         }
 
 
-        for ($i =0; $i < 5; $i++) {
+        for ($i =0; $i < count($categories); $i++) {
             $favoriteCategory = new FavoriteCategories();
-            $favoriteCategory->setCategory($category);
+            $favoriteCategory->setCategory($categories[$i]);
 
             $manager->persist($favoriteCategory);
         }
 
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < count($sources); $i++) {
             $favoriteSource = new FavoriteSources();
-            $favoriteSource->setSource($source);
+            $favoriteSource->setSource($sources[$i]);
 
             $manager->persist($favoriteSource);
         }
