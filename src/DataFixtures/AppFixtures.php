@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\FavoriteCategories;
 use App\Entity\FavoriteSources;
 use App\Entity\Source;
@@ -32,16 +33,19 @@ class AppFixtures extends Fixture
 
 
         
-        
+        $users = [];
         for ($i= 0; $i < 5; $i++) {
             $user = new User();
             $user->setName($faker->lastName)
                 ->setFirstname($faker->firstName)
                 ->setEmail($faker->email)
                 ->setLogin($faker->userName)
-                ->setPassword($faker->password);
+                ->setPassword($faker->password)
+                ->addFavorite($faker->favorites);
+                
 
             $manager->persist($user);
+            $users[]= $user;
         }
 
 
@@ -60,6 +64,7 @@ class AppFixtures extends Fixture
 
 
         
+        $articles = [];
 
         for ($i = 0; $i < 10; $i++) {
             $article = new Article();
@@ -72,10 +77,11 @@ class AppFixtures extends Fixture
                     ->setSource($sources[$faker->numberBetween(0, count($sources) - 1)]);
             
             $manager->persist($article);
+            $articles[]= $article;
 
         }
 
-
+        
         for ($i =0; $i < count($categories); $i++) {
             $favoriteCategory = new FavoriteCategories();
             $favoriteCategory->setCategory($categories[$i]);
@@ -91,6 +97,24 @@ class AppFixtures extends Fixture
             $manager->persist($favoriteSource);
         }
 
+        //for ($i = 0; $i <count($users); $i++) {
+        //    $favoriteUser = new User();
+        //    $favoriteUser->set
+        //    
+        //}
+
+
+        for ($i = 0; $i < 15; $i++) {
+            $comment = new Comment();
+            $comment-> setContent($faker->paragraph($faker->numberBetween(1,10)))
+                    ->setDate($faker ->dateTime)
+                    ->setArticle($articles[$faker->numberBetween(0,count($articles)-1)])
+                    ->setUser($users[$faker->numberBetween(0,count($users)-1)]);
+            
+            $manager->persist($comment);
+        }
         $manager->flush();
+
+        
     }
 }
