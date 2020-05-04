@@ -32,24 +32,6 @@ class AppFixtures extends Fixture
         }
 
 
-        
-        $users = [];
-        for ($i= 0; $i < 5; $i++) {
-            $user = new User();
-            $user->setName($faker->lastName)
-                ->setFirstname($faker->firstName)
-                ->setEmail($faker->email)
-                ->setLogin($faker->userName)
-                ->setPassword($faker->password)
-                ->addFavorite($faker->favorites);
-                
-
-            $manager->persist($user);
-            $users[]= $user;
-        }
-
-
-
         $sources = [];
         $sourceNames = ['huffington-post', 'bfm', 'lci'];
 
@@ -81,28 +63,47 @@ class AppFixtures extends Fixture
 
         }
 
-        
+        $favoriteCategories = [];
         for ($i =0; $i < count($categories); $i++) {
             $favoriteCategory = new FavoriteCategories();
             $favoriteCategory->setCategory($categories[$i]);
 
+            
             $manager->persist($favoriteCategory);
+            $favoriteCategories[]= $favoriteCategory;
         }
 
-
+        $favoriteSources = [];
+        
         for ($i = 0; $i < count($sources); $i++) {
             $favoriteSource = new FavoriteSources();
             $favoriteSource->setSource($sources[$i]);
 
+            
             $manager->persist($favoriteSource);
+            $favoriteSources[] = $favoriteSource;
         }
 
-        //for ($i = 0; $i <count($users); $i++) {
-        //    $favoriteUser = new User();
-        //    $favoriteUser->set
-        //    
-        //}
 
+        
+        
+        $users = [];
+    
+        
+        for ($i= 0; $i < 5; $i++) {
+            $user = new User();
+            $user->setName($faker->lastName)
+                ->setFirstname($faker->firstName)
+                ->setEmail($faker->email)
+                ->setLogin($faker->userName)
+                ->setPassword($faker->password)
+                ->addFavorite($favoriteSources[$faker->numberBetween(0, count($favoriteSources) - 1)])
+                ->addFavorite($favoriteCategories[$faker->numberBetween(0, count($favoriteCategories) - 1)]);
+                
+
+            $manager->persist($user);
+            $users[]= $user;
+        }
 
         for ($i = 0; $i < 15; $i++) {
             $comment = new Comment();
@@ -113,7 +114,10 @@ class AppFixtures extends Fixture
             
             $manager->persist($comment);
         }
+        
+        
         $manager->flush();
+
 
         
     }
