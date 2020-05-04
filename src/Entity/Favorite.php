@@ -33,7 +33,7 @@ abstract class Favorite
 
     public function __construct()
     {
-        $this->idUser = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int

@@ -18,14 +18,12 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        $categories=[];
+        $categories = [];
         $categorieNames = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
 
         for ($i = 0; $i < count($categorieNames); $i++) {
             $category = new Category();
             $category->setName($categorieNames[$i]);
-
-            $categories = $category;
 
             $manager->persist($category);
         }
@@ -36,7 +34,7 @@ class AppFixtures extends Fixture
         for ($i= 0; $i < 5; $i++) {
             $user = new User();
             $user->setName($faker->lastName)
-                ->setFirstname($faker->firstName($gender = null|'male'|'female'))
+                ->setFirstname($faker->firstName)
                 ->setEmail($faker->email)
                 ->setLogin($faker->userName)
                 ->setPassword($faker->password);
@@ -53,8 +51,6 @@ class AppFixtures extends Fixture
             $source = new Source();
             $source->setName($sourceNames[$i]);
 
-            $sources = $source;
-
             $manager->persist($source);
         }
 
@@ -66,10 +62,10 @@ class AppFixtures extends Fixture
             $article->setUrl($faker->url)
                     ->setImageUrl($faker->url)
                     ->setDescription($faker->paragraph($faker->numberBetween(1,10)))
-                    ->setTitle($faker->words($faker->numberBetween(1,5)))
+                    ->setTitle($faker->words($faker->numberBetween(1,5), true))
                     ->setDate($faker->dateTime)
-                    ->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)])
-                    ->setSource($sources[$faker->numberBetween(0, count($sources) - 1)]);
+                    ->setCategory($category)
+                    ->setSource($source);
             
             $manager->persist($article);
 
@@ -78,7 +74,7 @@ class AppFixtures extends Fixture
 
         for ($i =0; $i < 5; $i++) {
             $favoriteCategory = new FavoriteCategories();
-            $favoriteCategory->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)]);
+            $favoriteCategory->setCategory($category);
 
             $manager->persist($favoriteCategory);
         }
@@ -86,7 +82,7 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 5; $i++) {
             $favoriteSource = new FavoriteSources();
-            $favoriteSource->setSource($sources[$faker->numberBetween(0, count($sources) - 1)]);
+            $favoriteSource->setSource($source);
 
             $manager->persist($favoriteSource);
         }
