@@ -46,7 +46,7 @@ class Article
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="idArticle", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", orphanRemoval=true)
      */
     private $comments;
 
