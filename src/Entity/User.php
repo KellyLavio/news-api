@@ -37,12 +37,12 @@ class User implements UserInterface
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="idUser", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", orphanRemoval=true)
      */
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Favorite", mappedBy="idUser")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Favorite", mappedBy="user")
      */
     private $favorites;
 

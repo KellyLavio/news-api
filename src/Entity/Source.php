@@ -26,7 +26,7 @@ class Source
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="idSource", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="source", orphanRemoval=true)
      */
     private $articles;
 
