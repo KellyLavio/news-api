@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class FavoriteCategories extends Favorite
 {
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Category", inversedBy="favoriteCategories", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Category", inversedBy="favorite", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
