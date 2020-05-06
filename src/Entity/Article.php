@@ -6,9 +6,13 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups"={"articleRead"}},
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
  */
 class Article
@@ -17,47 +21,56 @@ class Article
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("articleRead")
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups("articleRead")
      */
     private $url;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("articleRead")
      */
     private $date;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups("articleRead")
      */
     private $imageUrl;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups("articleRead")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("articleRead")
      */
     private $title;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", orphanRemoval=true)
+     * @Groups("articleRead")
      */
     private $comments;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
+     * @Groups("articleRead")
      */
     private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Source", inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("articleRead")
      */
     private $source;
 
