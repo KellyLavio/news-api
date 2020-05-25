@@ -5,7 +5,3 @@ api_platform:
         json: ['application/merge-patch+json']
     swagger:
         versions: [3]
-        # The list of enabled formats. The first one will be the default.
-    formats:
-        json:
-            mime_types: ['application/json']
