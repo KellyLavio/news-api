@@ -19,7 +19,8 @@
         "symfony/yaml": "4.4.*"
     },
     "require-dev": {
-        "fzaninotto/faker": "^1.9"
+        "fzaninotto/faker": "^1.9",
+        "symfony/profiler-pack": "^1.0"
     },
     "config": {
         "preferred-install": {
