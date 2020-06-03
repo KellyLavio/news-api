@@ -4,3 +4,7 @@
 api_login_check:
   path: /api/login_check
   methods: ['POST']
+
+api_register:
+  path: /api/users
+  methods: ['POST']

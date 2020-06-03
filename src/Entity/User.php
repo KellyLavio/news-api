@@ -6,9 +6,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups"={"userCreate"}
+ * },
+ *  collectionOperations={"post"}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
@@ -22,16 +27,19 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("userCreate")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("userCreate")
      */
     private $firstname;
 
      /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("userCreate")
      */
     private $login;
 
@@ -48,6 +56,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups("userCreate")
      */
     private $email;
 
@@ -59,6 +68,7 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups("userCreate")
      */
     private $password;
 

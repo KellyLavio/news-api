@@ -30,6 +30,11 @@ security:
             stateless: true
             anonymous: true
 
+        api_public_register:
+            pattern: ^/api/users
+            stateless: true
+            anonymous: true
+
         user_page:
             pattern: ^/api/userPage
             stateless: true
@@ -60,6 +65,6 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/api/articles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/userPage, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/users, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         
