@@ -10,7 +10,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups"={"favoritesRead"}},
+ *  collectionOperations={"get"}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  */
 class Category
@@ -25,11 +28,13 @@ class Category
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("articleRead")
+     * @Groups("favoritesRead")
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="category")
+     * @Groups("favoritesRead")
      */
     private $articles;
 

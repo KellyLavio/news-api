@@ -35,12 +35,10 @@ security:
             stateless: true
             anonymous: true
 
-        user_page:
-            pattern: ^/api/userPage
+        user_favorites:
+            pattern: ^/api/categories
             stateless: true
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+            anonymous: true
 
         api:
             pattern: ^/api/
@@ -63,6 +61,7 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/api/categories, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/articles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/users, roles: IS_AUTHENTICATED_ANONYMOUSLY }

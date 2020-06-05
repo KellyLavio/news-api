@@ -23,18 +23,21 @@ class Article
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups("articleRead")
+     * @Groups("favoritesRead")
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
      * @Groups("articleRead")
+     * @Groups("favoritesRead")
      */
     private $url;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups("articleRead")
+     * @Groups("favoritesRead")
      */
     private $date;
 
@@ -47,12 +50,14 @@ class Article
     /**
      * @ORM\Column(type="text")
      * @Groups("articleRead")
+     * @Groups("favoritesRead")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("articleRead")
+     * @Groups("favoritesRead")
      */
     private $title;
 
@@ -72,6 +77,7 @@ class Article
      * @ORM\ManyToOne(targetEntity="App\Entity\Source", inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
      * @Groups("articleRead")
+     * @Groups("favoritesRead")
      */
     private $source;
 
