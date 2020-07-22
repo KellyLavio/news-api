@@ -6,6 +6,7 @@ use App\Entity\User;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class PasswordEncoderSubscriber implements EventSubscriber
 {
@@ -21,7 +22,9 @@ class PasswordEncoderSubscriber implements EventSubscriber
     $object = $args->getObject();
 
     if ($object instanceof User) {
-      $object->setPassword(new PASSWORD_BCRYPT());
+      $object->setPassword(new EncodedPassword());
+    //   $object->setPassword($this->encoder->encodePassword())
+    //   $object->setPassword(new Password($this->encoder->encodePassword()))
     }
   }
 }
