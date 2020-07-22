@@ -27,7 +27,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
       # add more service definitions when explicit configuration is needed
-  # please note that last definitions always *replace* previous ones
-  App\EventSubscriber\PasswordEncoderSubscriber:
+    # please note that last definitions always *replace* previous ones
+    App\EventSubscriber\PasswordEncoderSubscriber:
     tags:
       - { name: doctrine.event_subscriber }
