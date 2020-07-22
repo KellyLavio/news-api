@@ -39,7 +39,6 @@ class Category
     private $articles;
 
     /**
-     * @Groups("favoritesRead")
      * @ORM\OneToOne(targetEntity="App\Entity\FavoriteCategories", mappedBy="category", cascade={"persist", "remove"})
      */
     private $favorite;

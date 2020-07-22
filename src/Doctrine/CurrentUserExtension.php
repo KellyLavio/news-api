@@ -38,7 +38,7 @@ final class CurrentUserExtension implements QueryCollectionExtensionInterface, Q
         }
 
         $rootAlias = $queryBuilder->getRootAliases()[0];
-        $queryBuilder->join(User::class, 'u');
+        $queryBuilder->innerJoin($rootAlias . '.user', 'u');
         // $queryBuilder->andWhere(sprintf('%s.user = :user', $rootAlias));
         $queryBuilder->andWhere('u.id = :user_id');
         $queryBuilder->setParameter('user_id', $user->getId());
