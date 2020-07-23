@@ -12,3 +12,11 @@ api_register:
 favorite_categories:
   path: /api/favorite_categories
   methods: ['GET']
+
+favorite_sources:
+  path: /api/favorite_sources
+  methods: ['GET']
+
+favorites:
+  path: /api/favorites
+  methods: ['GET']

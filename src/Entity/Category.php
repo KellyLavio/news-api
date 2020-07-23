@@ -11,7 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *  normalizationContext={"groups"={"favoritesRead"}},
+ *  normalizationContext={"groups"={"favoritesCategoriesRead"}},
  *  collectionOperations={"get"}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
@@ -28,13 +28,13 @@ class Category
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("articleRead")
-     * @Groups("favoritesRead")
+     * @Groups("favoritesCategoriesRead")
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="category")
-     * @Groups("favoritesRead")
+     * @Groups("favoritesCategoriesRead")
      */
     private $articles;
 

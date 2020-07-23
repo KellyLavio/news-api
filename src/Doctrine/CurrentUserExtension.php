@@ -8,8 +8,6 @@ use Doctrine\ORM\QueryBuilder;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use App\Entity\Favorite;
 use App\Entity\FavoriteCategories;
-use App\Entity\User;
-use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Component\Security\Core\Security;
 
 final class CurrentUserExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
@@ -33,7 +31,7 @@ final class CurrentUserExtension implements QueryCollectionExtensionInterface, Q
 
     private function addWhere(QueryBuilder $queryBuilder, string $resourceClass): void
     {
-        if (FavoriteCategories::class !== $resourceClass || null === $user = $this->security->getUser()) {
+        if ((!is_subclass_of($resourceClass,Favorite::class)) || null === $user = $this->security->getUser()) {
             return;
         }
 

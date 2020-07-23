@@ -9,7 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups"={"favoritesSourcesRead"}},
+ *  collectionOperations={"get"}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\SourceRepository")
  */
 class Source
@@ -23,13 +26,14 @@ class Source
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("favoritesRead")
+     * @Groups("favoritesSourcesRead")
      * @Groups("articleRead")
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="source", orphanRemoval=true)
+     * @Groups("favoritesSourcesRead")
      */
     private $articles;
 

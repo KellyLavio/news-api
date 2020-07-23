@@ -23,21 +23,24 @@ class Article
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups("articleRead")
-     * @Groups("favoritesRead")
+     * @Groups("favoritesSourcesRead")
+     * @Groups("favoritesCategoriesRead")
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
      * @Groups("articleRead")
-     * @Groups("favoritesRead")
+     * @Groups("favoritesSourcesRead")
+     * @Groups("favoritesCategoriesRead")
      */
     private $url;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups("articleRead")
-     * @Groups("favoritesRead")
+     * @Groups("favoritesSourcesRead")
+     * @Groups("favoritesCategoriesRead")
      */
     private $date;
 
@@ -50,20 +53,24 @@ class Article
     /**
      * @ORM\Column(type="text")
      * @Groups("articleRead")
-     * @Groups("favoritesRead")
+     * @Groups("favoritesSourcesRead")
+     * @Groups("favoritesCategoriesRead")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("articleRead")
-     * @Groups("favoritesRead")
+     * @Groups("favoritesSourcesRead")
+     * @Groups("favoritesCategoriesRead")
      */
     private $title;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", orphanRemoval=true)
      * @Groups("articleRead")
+     * @Groups("favoritesSourcesRead")
+     * @Groups("favoritesCategoriesRead")
      */
     private $comments;
 
@@ -77,7 +84,6 @@ class Article
      * @ORM\ManyToOne(targetEntity="App\Entity\Source", inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
      * @Groups("articleRead")
-     * @Groups("favoritesRead")
      */
     private $source;
 
