@@ -35,9 +35,34 @@ security:
             stateless: true
             anonymous: true
 
-        user_page:
-            pattern: ^/api/userPage
+        categories:
+            pattern: ^/api/categories
             stateless: true
+            anonymous: true
+
+        favorite_categories:
+            pattern: ^/api/favorite_categories
+            stateless: true
+            anonymous: true
+            provider: app_user_provider
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
+        favorite_sources:
+            pattern: ^/api/favorite_sources
+            stateless: true
+            anonymous: true
+            provider: app_user_provider
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
+        favorites:
+            pattern: ^/api/favorites
+            stateless: true
+            anonymous: true
+            provider: app_user_provider
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
@@ -63,8 +88,12 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/api/favorite_categories, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/favorite_sources, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/favorites, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/categories, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/articles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/users, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         

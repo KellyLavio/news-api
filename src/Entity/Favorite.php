@@ -27,9 +27,10 @@ abstract class Favorite
     private $id;
 
     /**
+     * @var Collection|User[]
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="favorites")
      */
-    private $user;
+    protected $user;
 
     public function __construct()
     {

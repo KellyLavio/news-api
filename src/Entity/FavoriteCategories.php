@@ -4,9 +4,14 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups"={"favoritesCategoriesRead"}},
+ *  collectionOperations={"get"}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\FavoriteCategoriesRepository")
  */
 class FavoriteCategories extends Favorite
@@ -14,6 +19,7 @@ class FavoriteCategories extends Favorite
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Category", inversedBy="favorite", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("favoritesCategoriesRead")
      */
     private $category;
 
