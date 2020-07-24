@@ -68,6 +68,6 @@ https://github.com/KellyGauthier/news-front
 
 ![news](images/screenshot.png "news feed favoris")
 
-Il est possible de selectionner son news feed principal en choisissant d'afficher soit les articles relatifs aux favoris de l'utilisateur, soit le news feed par défaut.
+Si l'utilisateur possède un compte, il lui est possible de selectionner son news feed principal en choisissant d'afficher soit les articles relatifs à ses favoris, soit le news feed par défaut.
 
 
