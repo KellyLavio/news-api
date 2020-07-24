@@ -45,7 +45,8 @@ Le nombre de requêtes est limité à 500 par utilisateur, par jour.
 ## Fonctionalités
 
 ### Afficher les favoris dans le news feed principal
-![news feed favoris](images/screenshot.png "news feed favoris")
+
+![news](images/screenshot.png "news feed favoris")
 
 Il est possible de selectionner son news feed principal en choisissant d'afficher soit les articles relatifs aux favoris de l'utilisateur, soit le news feed par défaut.
 
