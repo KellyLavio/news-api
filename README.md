@@ -7,18 +7,19 @@ Cette application vous permet de suivre l'actualité en mettant à disposition l
 ## Prérequis
 Avant de continuer, assurez-vous de:
 
-* avoir installer PHP
+* avoir installé PHP
 * utiliser composer et symfony
+* lancer WAMP/MAMP/LAMP
 
 Composer
 ``` bash
 composer install
 ```
+
 Démarrez le serveur avec symfony
 ``` bash
 symfony server:start
 ```
-</br>
 
 Créez votre .env.local avec:
 ``` env
@@ -40,7 +41,11 @@ php bin/console doctrine:fixtures:load
 ## Récupérez les données via l'API: 
 https://newsapi.org/
 Le nombre de requêtes est limité à 500 par utilisateur, par jour.
-</br>
+</br>  
+
+## Récupérez la partie front de l'application
+https://github.com/KellyGauthier/news-front
+</br>  
 
 ## Fonctionalités
 
