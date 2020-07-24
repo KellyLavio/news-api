@@ -21,6 +21,21 @@ Démarrez le serveur avec symfony
 symfony server:start
 ```
 
+Générer le JWT
+``` bash 
+mkdir -p config/jwt
+```
+
+Clé privée
+``` bash 
+openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+```
+
+Clé publique
+``` bash 
+openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
+```
+
 Créez votre .env.local avec:
 ``` env
 DATABASE_URL
