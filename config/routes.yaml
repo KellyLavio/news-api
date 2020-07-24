@@ -8,3 +8,15 @@ api_login_check:
 api_register:
   path: /api/users
   methods: ['POST']
+
+favorite_categories:
+  path: /api/favorite_categories
+  methods: ['GET']
+
+favorite_sources:
+  path: /api/favorite_sources
+  methods: ['GET']
+
+favorites:
+  path: /api/favorites
+  methods: ['GET']
