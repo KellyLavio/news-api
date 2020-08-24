@@ -11,43 +11,47 @@ Avant de continuer, assurez-vous de:
 * utiliser composer et symfony
 * lancer WAMP/MAMP/LAMP
 
-Composer
+#### Composer
 ``` bash
 composer install
 ```
 
-Démarrez le serveur avec symfony
+#### Démarrez le serveur avec symfony
 ``` bash
 symfony server:start
 ```
 
-Générer le JWT
+#### Générer le JWT
 ``` bash 
 mkdir -p config/jwt
 ```
 
-Clé privée
+##### Clé privée
 ``` bash 
 openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
 ```
 
-Clé publique
+##### Clé publique
 ``` bash 
 openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 ```
 
-Créez votre .env.local avec:
+#### Créer son compte sur le site de l'API
+[ApiNews](https://newsapi.org/)
+Afin de récupérer le token que vous mettrez dans votre .env.local
+
+#### Créez votre .env.local avec:
 ``` env
 DATABASE_URL
 JWT
 ```
 
-Créez votre base de données
+#### Créez votre base de données
 ``` bash 
 php app/console doctrine:migrations:migrate
 ```
 
-Créez une entité dans la base de données
+#### Créez une entité dans la base de données
 ``` bash 
 php bin/console doctrine:fixtures:load
 ```
