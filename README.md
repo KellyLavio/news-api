@@ -44,6 +44,7 @@ Afin de récupérer le token que vous mettrez dans votre .env.local
 ``` env
 DATABASE_URL
 JWT
+APINEWS_TOKEN
 ```
 
 #### Créez votre base de données
