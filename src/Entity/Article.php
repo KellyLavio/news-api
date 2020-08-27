@@ -45,13 +45,13 @@ class Article
     private $date;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Groups("articleRead")
      */
     private $imageUrl;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Groups("articleRead")
      * @Groups("favoritesSourcesRead")
      * @Groups("favoritesCategoriesRead")
