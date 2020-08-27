@@ -24,7 +24,8 @@ class ProfilPageController extends AbstractController
                 'name' => $user->getName(),
                 'firstname' => $user->getFirstname(),
                 'login' => $user->getLogin(),
-                'email' => $user->getEmail()
+                'email' => $user->getEmail(),
+                'favorites' => $user->getFavorites()
             ]);
         } else {
             return "Une erreur est survenue.";

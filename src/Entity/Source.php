@@ -28,6 +28,7 @@ class Source
      * @ORM\Column(type="string", length=255)
      * @Groups("favoritesSourcesRead")
      * @Groups("articleRead")
+     * @Groups("userData")
      */
     private $name;
 

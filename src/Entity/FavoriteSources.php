@@ -19,6 +19,7 @@ class FavoriteSources extends Favorite
      * @ORM\OneToOne(targetEntity="App\Entity\Source", inversedBy="favorite", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      * @Groups("favoritesSourcesRead")
+     * @Groups("userData")
      */
     private $source;
 
