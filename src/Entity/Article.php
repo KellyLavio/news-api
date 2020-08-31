@@ -82,7 +82,7 @@ class Article
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Source", inversedBy="articles")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      * @Groups("articleRead")
      */
     private $source;
@@ -126,7 +126,7 @@ class Article
         return $this->imageUrl;
     }
 
-    public function setImageUrl(string $imageUrl): self
+    public function setImageUrl(?string $imageUrl): self
     {
         $this->imageUrl = $imageUrl;
 
@@ -138,7 +138,7 @@ class Article
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 

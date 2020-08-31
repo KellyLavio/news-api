@@ -19,13 +19,13 @@ class SourceRepository extends ServiceEntityRepository
         parent::__construct($registry, Source::class);
     }
 
-        public function createNewSource(array $source)
-    {
-        $newSource = new Source();
-        $newSource->setName($source["name"]);
+    //     public function createNewSource(array $source)
+    // {
+    //     $newSource = new Source();
+    //     $newSource->setName($source["name"]);
 
-        return $newSource;
-    }
+    //     return $newSource;
+    // }
 
     // /**
     //  * @return Source[] Returns an array of Source objects

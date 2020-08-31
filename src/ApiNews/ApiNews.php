@@ -34,6 +34,6 @@ class ApiNews
 
         $content = $response->toArray();
 
-        return $content["art"];
+        return $content["articles"];
     }
 }

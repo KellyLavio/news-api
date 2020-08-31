@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -31,7 +32,7 @@ class NewsApiController extends AbstractController
     }
 
     /**
-     * @Route("/news/api", name="news_api", methods={"GET"})
+     * @Route("/news/api", name="news_api", methods={"GET", "POST"})
      */
     public function getArticles(Request $request, ApiNews $apiNews, EntityManagerInterface $em, ArticleRepository $articleRepository)
     {
@@ -46,9 +47,14 @@ class NewsApiController extends AbstractController
             // dd($articleList);
             // $objArticle = $this->serializer->deserialize($article, Article::class, 'json', []);
 
-            $em->persist($newArticle);
+            if ($newArticle !== null) {
+                $em->persist($newArticle);
+            } else {
+                return $this->json("Erreur de persist");
+            }
         };
-
+        
         $em->flush();
+        return new Response("Articles enregistrés en BDD");
     }
 }
