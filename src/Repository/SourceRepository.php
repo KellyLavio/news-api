@@ -19,13 +19,25 @@ class SourceRepository extends ServiceEntityRepository
         parent::__construct($registry, Source::class);
     }
 
-    //     public function createNewSource(array $source)
-    // {
-    //     $newSource = new Source();
-    //     $newSource->setName($source["name"]);
+    /**
+     * Create a new Source if there is no source name in the Article table from the database
+     *
+     * @param string $name
+     * @return Source
+     */
+    public function createOrRetrieve(string $name): Source {
+        // Identifies the Source by name
+        $source = $this->findOneBy(['name' => $name]);
 
-    //     return $newSource;
-    // }
+        // If there is no Source in BDD, creates a new Source
+        if ($source === null) {
+            $source = new Source();
+            $source->setName($name);
+            $this->_em->persist($source);
+            $this->_em->flush();
+        }
+        return $source;
+    }
 
     // /**
     //  * @return Source[] Returns an array of Source objects

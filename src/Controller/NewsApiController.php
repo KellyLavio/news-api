@@ -6,17 +6,12 @@ namespace App\Controller;
 use App\ApiNews\ApiNews;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use App\Repository\SourceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 
 class NewsApiController extends AbstractController
@@ -34,25 +29,20 @@ class NewsApiController extends AbstractController
     /**
      * @Route("/news/api", name="news_api", methods={"GET", "POST"})
      */
-    public function getArticles(Request $request, ApiNews $apiNews, EntityManagerInterface $em, ArticleRepository $articleRepository)
+    public function getArticles(Request $request, ApiNews $apiNews, EntityManagerInterface $em, ArticleRepository $articleRepository, SourceRepository $sourceRepository)
     {
         $articleList = $apiNews->fetchArticles();
 
-        // $allArticles = $em->getRepository(Article::class)->findAll();
-
         foreach($articleList as $article) {
-            $newArticle = $articleRepository->createNewArticle($article);
+            $source = $sourceRepository->createOrRetrieve($article['source']['name']);
+            $newArticle = $articleRepository->createNewArticle($article, $source);
 
-            // $this->serializer->deserialize($article, Article::class, 'json');
-            // dd($articleList);
-            // $objArticle = $this->serializer->deserialize($article, Article::class, 'json', []);
-
-            if ($newArticle !== null) {
-                $em->persist($newArticle);
-            } else {
-                return $this->json("Erreur de persist");
-            }
-        };
+                if ($newArticle !== null) {
+                    $em->persist($newArticle);
+                } else {
+                    return $this->json("Erreur de persist");
+                }
+            };
         
         $em->flush();
         return new Response("Articles enregistrés en BDD");

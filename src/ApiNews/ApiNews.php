@@ -26,12 +26,6 @@ class ApiNews
                 ],
             ]);
 
-        // $statusCode = $response->getStatusCode();
-
-        // $contentType = $response->getHeaders()['application/json'][0];
-
-        $content = $response->getContent();
-
         $content = $response->toArray();
 
         return $content["articles"];

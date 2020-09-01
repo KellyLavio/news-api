@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\Source;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -25,25 +26,20 @@ class ArticleRepository extends ServiceEntityRepository
      * @param array $article
      * @return void
      */
-    public function createNewArticle(array $article)
+    public function createNewArticle(array $article, Source $source)
     {
-        // Formate la date et convertit de string to Datetime
-        $rawDate = $article["publishedAt"];
-        $replaceDate = substr(substr_replace($rawDate, ' ', 10, 1), 0, -1);
-        $format = 'Y-m-d H:i:s';
-        $formatedDate = date_create_from_format($format, $replaceDate);
+        // Formats the date & converts it from string to Datetime
+        $replaceDate = substr(substr_replace($article["publishedAt"], ' ', 10, 1), 0, -1);
+        $formatedDate = date_create_from_format('Y-m-d H:i:s', $replaceDate);
 
         $newArticle = new Article();
         $newArticle->setUrl($article["url"]);
         $newArticle->setDate($formatedDate);
-
         $newArticle->setImageUrl($article["urlToImage"]);
-
-
         $newArticle->setDescription($article["description"]);
-
-
         $newArticle->setTitle($article["title"]);
+
+        $newArticle->setSource($source);
 
         return $newArticle;
     }

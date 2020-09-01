@@ -82,7 +82,7 @@ class Article
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Source", inversedBy="articles")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      * @Groups("articleRead")
      */
     private $source;
