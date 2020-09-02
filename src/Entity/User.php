@@ -22,7 +22,7 @@ use App\Controller\CurrentUser;
  *          "controller"=CurrentUser::class,
  *          "normalization_context"={"groups"={"userData"}},
  *      }
- * }
+ *  }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
@@ -66,7 +66,7 @@ class User implements UserInterface
      * @ORM\ManyToMany(targetEntity="App\Entity\Favorite", mappedBy="user")
      * @Groups("userData")
      */
-    private $favorites;
+    protected $favorites;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)

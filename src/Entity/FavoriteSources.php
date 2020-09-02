@@ -5,11 +5,20 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Dto\ListItem;
 
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"favoritesSourcesRead"}},
- *  collectionOperations={"get"}
+ *  collectionOperations={
+ *      "get",
+ *      "list_item"={
+ *          "method"="GET",
+ *          "path"="/favoriteSources/listItems",
+ *          "normalization_context"={"groups"={"listFavoriteSources"}},
+ *          "output"=ListItem::class
+ *      }
+ * }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\FavoriteSourcesRepository")
  */
