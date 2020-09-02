@@ -1,6 +1,7 @@
 <?php
 
 namespace App\ApiNews;
+
 namespace App\Controller;
 
 use App\ApiNews\ApiNews;
@@ -27,24 +28,20 @@ class NewsApiController extends AbstractController
     }
 
     /**
-     * @Route("/news/api", name="news_api", methods={"GET", "POST"})
+     * @Route("/news/api", name="news_api", methods={"GET"})
      */
     public function getArticles(Request $request, ApiNews $apiNews, EntityManagerInterface $em, ArticleRepository $articleRepository, SourceRepository $sourceRepository)
     {
         $articleList = $apiNews->fetchArticles();
 
-        foreach($articleList as $article) {
+        foreach ($articleList as $article) {
             $source = $sourceRepository->createOrRetrieve($article['source']['name']);
             $newArticle = $articleRepository->createNewArticle($article, $source);
-
-                if ($newArticle !== null) {
+            if ($newArticle !== null) {
                     $em->persist($newArticle);
-                } else {
-                    return $this->json("Erreur de persist");
-                }
-            };
-        
-        $em->flush();
-        return new Response("Articles enregistrés en BDD");
+                    $em->flush();
+            }
+            return new Response("Articles enregistrés en BDD");
+        }
     }
 }

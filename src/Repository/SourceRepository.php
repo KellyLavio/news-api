@@ -33,6 +33,7 @@ class SourceRepository extends ServiceEntityRepository
         if ($source === null) {
             $source = new Source();
             $source->setName($name);
+
             $this->_em->persist($source);
             $this->_em->flush();
         }
