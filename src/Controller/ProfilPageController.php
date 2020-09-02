@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UpdateFavoriteFormType;
 use App\Form\UpdateFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,12 +47,39 @@ class ProfilPageController extends AbstractController
             if ($form->isValid()) {
                 $entity->flush();
             } else {
-                return new Response("Une erreur est survenue");
+                return new Response("Une erreur est survenue.");
             }
 
-            return new Response("Vos informations ont été modifiées");
+            return new Response("Vos informations ont été modifiées.");
         } else {
             return new Response("Une erreur est survenue.");
         }
+    }
+
+    /**
+     * @Route("api/updateFavorites", name="update_favorites")
+     */
+    public function updateFavorites(Request $request, EntityManagerInterface $entity)
+    {
+        $user = $this->getUser();
+        $content = json_decode($request->getContent(), true);
+
+        foreach ($content['favorites'] as $favoris) {
+             if ($user !== null && $user instanceof User) {
+            $form = $this->createForm(UpdateFavoriteFormType::class, $user);
+            $form->submit($favoris, false);
+            
+            if ($form->isValid()) {
+                $entity-flush();
+            } else {
+                return new Response("Une erreur est survenue.");
+            }
+            return new Response("Vos informations ont été modifiées.");
+        } else {
+            return new Response("Une erreur est survenue.");
+        }
+        }
+
+       
     }
 }
