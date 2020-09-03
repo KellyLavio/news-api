@@ -36,3 +36,9 @@ services:
         tags:
             - { name: api_platform.doctrine.orm.query_extension.collection }
             - { name: api_platform.doctrine.orm.query_extension.item }
+
+
+    App\ApiNews\ApiNews:
+        arguments:
+            $apiKey: '%env(APINEWS_TOKEN)%'
+

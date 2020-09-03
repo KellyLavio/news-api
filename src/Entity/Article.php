@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -15,6 +17,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *  collectionOperations={"get"}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
+ * @UniqueEntity("url")
  */
 class Article
 {
@@ -29,10 +32,11 @@ class Article
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="url")
      * @Groups("articleRead")
      * @Groups("favoritesSourcesRead")
      * @Groups("favoritesCategoriesRead")
+     * @Assert\Url
      */
     private $url;
 
@@ -45,13 +49,13 @@ class Article
     private $date;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Groups("articleRead")
      */
     private $imageUrl;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Groups("articleRead")
      * @Groups("favoritesSourcesRead")
      * @Groups("favoritesCategoriesRead")
@@ -126,7 +130,7 @@ class Article
         return $this->imageUrl;
     }
 
-    public function setImageUrl(string $imageUrl): self
+    public function setImageUrl(?string $imageUrl): self
     {
         $this->imageUrl = $imageUrl;
 
@@ -138,7 +142,7 @@ class Article
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
