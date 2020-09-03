@@ -27,6 +27,7 @@ class Source
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("favoritesSourcesRead")
+     * @Groups("favoritesCategoriesRead")
      * @Groups("articleRead")
      * @Groups("userData")
      */
@@ -35,6 +36,7 @@ class Source
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="source", orphanRemoval=true)
      * @Groups("favoritesSourcesRead")
+     * @Groups("favoritesCategoriesRead")
      */
     private $articles;
 
