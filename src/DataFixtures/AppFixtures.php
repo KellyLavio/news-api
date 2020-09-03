@@ -42,7 +42,7 @@ class AppFixtures extends Fixture
 
 
         $sources = [];
-        $sourceNames = ['huffington-post', 'bfm', 'lci'];
+        $sourceNames = ['huffington-post', 'bfm', 'lci', 'le monde', 'l\'équipe', '20 minutes', 'les numériques', 'foot mercato', 'boursorama', 'le parisien', 'pure people', 'presse-citron', 'france.tv' ];
 
         for ($i = 0; $i < count($sourceNames); $i++) {
             $source = new Source();
@@ -58,7 +58,7 @@ class AppFixtures extends Fixture
         
         $articles = [];
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $article = new Article();
             $article->setUrl($faker->url)
                     ->setImageUrl($faker->url)
