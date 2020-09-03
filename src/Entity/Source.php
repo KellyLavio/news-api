@@ -43,6 +43,12 @@ class Source
      */
     private $favorite;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="sources")
+     * @Groups("articleRead")
+     */
+    private $category;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -104,6 +110,18 @@ class Source
     public function setFavorite(FavoriteSources $favorite): self
     {
         $this->favorite = $favorite;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

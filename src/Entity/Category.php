@@ -44,9 +44,15 @@ class Category
      */
     private $favorite;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Source", mappedBy="category")
+     */
+    private $sources;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->sources = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,6 +111,37 @@ class Category
     public function setFavorite(FavoriteCategories $favorite): self
     {
         $this->favorite = $favorite;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Source[]
+     */
+    public function getSources(): Collection
+    {
+        return $this->sources;
+    }
+
+    public function addSource(Source $source): self
+    {
+        if (!$this->sources->contains($source)) {
+            $this->sources[] = $source;
+            $source->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSource(Source $source): self
+    {
+        if ($this->sources->contains($source)) {
+            $this->sources->removeElement($source);
+            // set the owning side to null (unless already changed)
+            if ($source->getCategory() === $this) {
+                $source->setCategory(null);
+            }
+        }
 
         return $this;
     }

@@ -23,6 +23,7 @@ class AppFixtures extends Fixture
     {
         $this->encoder = $encoder;
     }
+
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
@@ -45,7 +46,8 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < count($sourceNames); $i++) {
             $source = new Source();
-            $source->setName($sourceNames[$i]);
+            $source->setName($sourceNames[$i])
+                    ->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)]);
 
             $manager->persist($source);
 
@@ -63,7 +65,6 @@ class AppFixtures extends Fixture
                     ->setDescription($faker->paragraph($faker->numberBetween(1,10)))
                     ->setTitle($faker->words($faker->numberBetween(1,5), true))
                     ->setDate($faker->dateTime)
-                    ->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)])
                     ->setSource($sources[$faker->numberBetween(0, count($sources) - 1)]);
             
             $manager->persist($article);
@@ -104,8 +105,9 @@ class AppFixtures extends Fixture
                 ->setLogin("Adam1")
                 ->setRoles(['ROLE_ADMIN'])
                 ->setPassword(
-                    $this->admin,
-                    'AdamFirst')
+                    $this->encoder->encodePassword(
+                        $admin,
+                        'AdamFirst'))
                 ->addFavorite($favoriteSources[$faker->numberBetween(0, count($favoriteSources) - 1)])
                 ->addFavorite($favoriteCategories[$faker->numberBetween(0, count($favoriteCategories) - 1)]);
 
@@ -119,8 +121,9 @@ class AppFixtures extends Fixture
                 ->setEmail($faker->email)
                 ->setLogin($faker->userName)
                 ->setPassword(
-                    $this->user,
-                    $faker->password)
+                    $this->encoder->encodePassword(
+                        $user,
+                        $faker->password))
                 ->addFavorite($favoriteSources[$faker->numberBetween(0, count($favoriteSources) - 1)])
                 ->addFavorite($favoriteCategories[$faker->numberBetween(0, count($favoriteCategories) - 1)]);
                 

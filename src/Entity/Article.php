@@ -79,12 +79,6 @@ class Article
     private $comments;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
-     * @Groups("articleRead")
-     */
-    private $category;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Source", inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
      * @Groups("articleRead")
@@ -188,18 +182,6 @@ class Article
                 $comment->setArticle(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
 
         return $this;
     }
