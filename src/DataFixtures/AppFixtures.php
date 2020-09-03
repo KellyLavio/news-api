@@ -104,10 +104,7 @@ class AppFixtures extends Fixture
                 ->setEmail("adam.first@gmail.com")
                 ->setLogin("Adam1")
                 ->setRoles(['ROLE_ADMIN'])
-                ->setPassword(
-                    $this->encoder->encodePassword(
-                        $admin,
-                        'AdamFirst'))
+                ->setPassword('AdamFirst')
                 ->addFavorite($favoriteSources[$faker->numberBetween(0, count($favoriteSources) - 1)])
                 ->addFavorite($favoriteCategories[$faker->numberBetween(0, count($favoriteCategories) - 1)]);
 
@@ -120,10 +117,7 @@ class AppFixtures extends Fixture
                 ->setFirstname($faker->firstName)
                 ->setEmail($faker->email)
                 ->setLogin($faker->userName)
-                ->setPassword(
-                    $this->encoder->encodePassword(
-                        $user,
-                        $faker->password))
+                ->setPassword($faker->password)
                 ->addFavorite($favoriteSources[$faker->numberBetween(0, count($favoriteSources) - 1)])
                 ->addFavorite($favoriteCategories[$faker->numberBetween(0, count($favoriteCategories) - 1)]);
                 
