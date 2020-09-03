@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\Source;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,9 +20,30 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-    // /**
-    //  * @return Article[] Returns an array of Article objects
-    //  */
+    /**
+     * Return an Article array of objects
+     *
+     * @param array $article
+     * @return void
+     */
+    public function createNewArticle(array $article, Source $source)
+    {
+        // Formats the date & converts it from string to Datetime
+        $replaceDate = substr(substr_replace($article["publishedAt"], ' ', 10, 1), 0, -1);
+        $formatedDate = date_create_from_format('Y-m-d H:i:s', $replaceDate);
+
+        $newArticle = new Article();
+        $newArticle->setUrl($article["url"]);
+        $newArticle->setDate($formatedDate);
+        $newArticle->setImageUrl($article["urlToImage"]);
+        $newArticle->setDescription($article["description"]);
+        $newArticle->setTitle($article["title"]);
+
+        $newArticle->setSource($source);
+
+        return $newArticle;
+    }
+
     /*
     public function findByExampleField($value)
     {
@@ -31,8 +53,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->orderBy('a.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
     */
 
