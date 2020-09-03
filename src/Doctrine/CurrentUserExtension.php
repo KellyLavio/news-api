@@ -21,7 +21,7 @@ final class CurrentUserExtension implements QueryCollectionExtensionInterface, Q
 
     public function applyToCollection(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, ?string $operationName = null)
     {
-        $this->addWhere($queryBuilder, $resourceClass);
+        $this->addWhere($queryBuilder, $resourceClass, $operationName);
     }
 
     public function applyToItem(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, array $identifiers, ?string $operationName = null, array $context = [])
@@ -29,9 +29,9 @@ final class CurrentUserExtension implements QueryCollectionExtensionInterface, Q
         $this->addWhere($queryBuilder, $resourceClass);
     }
 
-    private function addWhere(QueryBuilder $queryBuilder, string $resourceClass): void
+    private function addWhere(QueryBuilder $queryBuilder, string $resourceClass, ?string $operationName = null): void
     {
-        if ((!is_subclass_of($resourceClass,Favorite::class)) || null === $user = $this->security->getUser()) {
+        if ((!is_subclass_of($resourceClass,Favorite::class)) || $operationName !== "get" || null === $user = $this->security->getUser()) {
             return;
         }
 

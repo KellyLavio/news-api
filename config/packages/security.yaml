@@ -40,6 +40,11 @@ security:
             stateless: true
             anonymous: true
 
+        sources:
+            pattern: ^/api/sources
+            stateless: true
+            anonymous: true
+
         favorite_categories:
             pattern: ^/api/favorite_categories
             stateless: true
@@ -92,8 +97,10 @@ security:
         - { path: ^/api/favorite_sources, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/favorites, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/categories, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/sources, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/articles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/users, methods: [ POST ], roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         
