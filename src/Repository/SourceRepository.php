@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Source;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,32 +41,29 @@ class SourceRepository extends ServiceEntityRepository
         return $source;
     }
 
-    // /**
-    //  * @return Source[] Returns an array of Source objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Creates a source from given api data
+     *
+     * @param array $source The source retrieved from the API
+     * @param Category $category The category entity previously retrieved from the API data
+     * @return integer 0 if source alerady exists, 1 if new source has been persisted
+     */
+    public function createFromApiData(array $source, Category $category): int
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+      $sourceEntity = $this->findOneBy(['apiId' => $source['id']]);
 
-    /*
-    public function findOneBySomeField($value): ?Source
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+      if ($sourceEntity !== null) {
+        return 0;
+      }
+
+      $sourceEntity = new Source();
+      $sourceEntity->setApiId($source['id'])
+        ->setLanguage($source['language'])
+        ->setCountry($source['country'])
+        ->setCategory($category)
+        ->setName($source['name']);
+
+      $this->_em->persist($sourceEntity);
+      return 1;
     }
-    */
 }
