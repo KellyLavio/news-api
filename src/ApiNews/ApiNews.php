@@ -24,7 +24,10 @@ class ApiNews
   {
     $response = $this->getResponse(
       $this->baseUrl . self::TOP_HEADLINES,
-      ['country' => 'fr']
+      [
+        'country' => 'fr',
+        'pageSize' => '100'
+      ]
     );
 
     $content = $response->toArray();
