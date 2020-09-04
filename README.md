@@ -52,11 +52,17 @@ APINEWS_TOKEN
 php app/console doctrine:migrations:migrate
 ```
 
-#### Créez une entité dans la base de données
+#### Créez les fixtures dans la base de données
 ``` bash 
 php bin/console doctrine:fixtures:load
 ```
 </br>
+
+#### Récupérer les vraies sources de l'API externe
+``` bash
+php bin/console app:fetch-sources
+```
+
 
 ## Récupérez les données via l'API: 
 https://newsapi.org/
