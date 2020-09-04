@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\FavoriteSources;
+use App\Entity\Source;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,32 +20,17 @@ class FavoriteSourcesRepository extends ServiceEntityRepository
         parent::__construct($registry, FavoriteSources::class);
     }
 
-    // /**
-    //  * @return FavoriteSources[] Returns an array of FavoriteSources objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function create(Source $sourceId)
     {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $favoriteSource = $this->findOneBy($sourceId);
 
-    /*
-    public function findOneBySomeField($value): ?FavoriteSources
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if ($favoriteSource === null) {
+            $favoriteSource = new FavoriteSources();
+            $favoriteSource->setSource($sourceId);
+
+            $this->_em->persist($favoriteSource);
+            $this->_em->flush();
+        }
+        return null;
     }
-    */
 }
