@@ -28,7 +28,7 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        $categories=[];
+        $categories = [];
         $categorieNames = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
 
         for ($i = 0; $i < count($categorieNames); $i++) {
@@ -42,12 +42,14 @@ class AppFixtures extends Fixture
 
 
         $sources = [];
-        $sourceNames = ['huffington-post', 'bfm', 'lci', 'le monde', 'l\'équipe', '20 minutes', 'les numériques', 'foot mercato', 'boursorama', 'le parisien', 'pure people', 'presse-citron', 'france.tv' ];
+        $sourceNames = ['huffington-post', 'bfm', 'lci', 'le monde', 'l\'équipe', '20 minutes', 'les numériques', 'foot mercato', 'boursorama', 'le parisien', 'pure people', 'presse-citron', 'france.tv'];
 
         for ($i = 0; $i < count($sourceNames); $i++) {
             $source = new Source();
             $source->setName($sourceNames[$i])
-                    ->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)]);
+                ->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)]);
+            // TODO : remplir le setApiId en BDD (de même que le language et le country) des sources de l'api ext
+            // ->setApiId();
 
             $manager->persist($source);
 
@@ -55,63 +57,62 @@ class AppFixtures extends Fixture
         }
 
 
-        
+
         $articles = [];
 
         for ($i = 0; $i < 30; $i++) {
             $article = new Article();
             $article->setUrl($faker->url)
-                    ->setImageUrl($faker->url)
-                    ->setDescription($faker->paragraph($faker->numberBetween(1,10)))
-                    ->setTitle($faker->words($faker->numberBetween(1,5), true))
-                    ->setDate($faker->dateTime)
-                    ->setSource($sources[$faker->numberBetween(0, count($sources) - 1)]);
-            
-            $manager->persist($article);
-            $articles[]= $article;
+                ->setImageUrl($faker->url)
+                ->setDescription($faker->paragraph($faker->numberBetween(1, 10)))
+                ->setTitle($faker->words($faker->numberBetween(1, 5), true))
+                ->setDate($faker->dateTime)
+                ->setSource($sources[$faker->numberBetween(0, count($sources) - 1)]);
 
+            $manager->persist($article);
+            $articles[] = $article;
         }
 
         $favoriteCategories = [];
-        for ($i =0; $i < count($categories); $i++) {
+        for ($i = 0; $i < count($categories); $i++) {
             $favoriteCategory = new FavoriteCategories();
             $favoriteCategory->setCategory($categories[$i]);
 
-            
+
             $manager->persist($favoriteCategory);
-            $favoriteCategories[]= $favoriteCategory;
+            $favoriteCategories[] = $favoriteCategory;
         }
 
         $favoriteSources = [];
-        
+
         for ($i = 0; $i < count($sources); $i++) {
             $favoriteSource = new FavoriteSources();
             $favoriteSource->setSource($sources[$i]);
 
-            
+
             $manager->persist($favoriteSource);
             $favoriteSources[] = $favoriteSource;
         }
 
 
-        
-        
+
+
         $users = [];
-    
+
         $admin = new User();
         $admin->setName("First")
-                ->setFirstname("Adam")
-                ->setEmail("adam.first@gmail.com")
-                ->setLogin("Adam1")
-                ->setRoles(['ROLE_ADMIN'])
-                ->setPassword('AdamFirst')
-                ->addFavorite($favoriteSources[$faker->numberBetween(0, count($favoriteSources) - 1)])
-                ->addFavorite($favoriteCategories[$faker->numberBetween(0, count($favoriteCategories) - 1)]);
+            ->setFirstname("Adam")
+            ->setEmail("adam.first@gmail.com")
+            ->setLogin("Adam1")
+            ->setRoles(['ROLE_ADMIN'])
+            ->setPassword('AdamFirst')
+            ->addFavorite($favoriteSources[$faker->numberBetween(0, count($favoriteSources) - 1)])
+            ->addFavorite($favoriteCategories[$faker->numberBetween(0, count($favoriteCategories) - 1)]);
 
-                $manager->persist($admin);
-                
-        
-        for ($i= 0; $i < 5; $i++) {
+        $manager->persist($admin);
+
+
+        for ($i = 0; $i < 5; $i++) {
             $user = new User();
             $user->setName($faker->lastName)
                 ->setFirstname($faker->firstName)
@@ -120,27 +121,24 @@ class AppFixtures extends Fixture
                 ->setPassword($faker->password)
                 ->addFavorite($favoriteSources[$faker->numberBetween(0, count($favoriteSources) - 1)])
                 ->addFavorite($favoriteCategories[$faker->numberBetween(0, count($favoriteCategories) - 1)]);
-                
-            
+
+
 
             $manager->persist($user);
-            $users[]= $user;
+            $users[] = $user;
         }
 
         for ($i = 0; $i < 15; $i++) {
             $comment = new Comment();
-            $comment-> setContent($faker->paragraph($faker->numberBetween(1,10)))
-                    ->setDate($faker ->dateTime)
-                    ->setArticle($articles[$faker->numberBetween(0,count($articles)-1)])
-                    ->setUser($users[$faker->numberBetween(0,count($users)-1)]);
-            
+            $comment->setContent($faker->paragraph($faker->numberBetween(1, 10)))
+                ->setDate($faker->dateTime)
+                ->setArticle($articles[$faker->numberBetween(0, count($articles) - 1)])
+                ->setUser($users[$faker->numberBetween(0, count($users) - 1)]);
+
             $manager->persist($comment);
         }
-        
-        
+
+
         $manager->flush();
-
-
-        
     }
 }

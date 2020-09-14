@@ -63,10 +63,10 @@ class ApiSourcesFetchCommand extends Command
 
     $this->em->flush();
 
-    foreach ($sources as $source) {
-      $databaseSource = $this->sourceRepository->createOrRetrieve($source['name']);
-      $this->favoriteSourcesRepository->create($databaseSource);
-    }
+    // foreach ($sources as $source) {
+    //   $databaseSource = $this->sourceRepository->createOrRetrieve($source['name']);
+    //   $this->favoriteSourcesRepository->create($databaseSource);
+    // }
 
     $io->success("$total sources persisted");
   }
