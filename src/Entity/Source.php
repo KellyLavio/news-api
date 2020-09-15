@@ -26,10 +26,7 @@ class Source
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("favoritesSourcesRead")
-     * @Groups("favoritesCategoriesRead")
-     * @Groups("articleRead")
-     * @Groups("userData")
+     * @Groups({"favoritesSourcesRead", "favoritesCategoriesRead", "articleRead", "userData"})
      */
     private $name;
 

@@ -27,9 +27,7 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("articleRead")
-     * @Groups("favoritesCategoriesRead")
-     * @Groups("userData")
+     * @Groups({"articleRead", "favoritesCategoriesRead", "userData"})
      */
     private $name;
 
