@@ -33,7 +33,8 @@ class SourceRepository extends ServiceEntityRepository
         // If there is no Source in BDD, creates a new Source
         if ($source === null) {
             $source = new Source();
-            $source->setName($name);
+            $source->setName($name)
+                  ->setApiId($name);
 
             $this->_em->persist($source);
             $this->_em->flush();
