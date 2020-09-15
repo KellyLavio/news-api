@@ -4,7 +4,6 @@ namespace App\Command;
 
 use App\ApiNews\ApiNews;
 use App\Repository\CategoryRepository;
-use App\Repository\FavoriteSourcesRepository;
 use App\Repository\SourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -20,20 +19,17 @@ class ApiSourcesFetchCommand extends Command
   private $sourceRepository;
   private $categoryRepository;
   private $em;
-  private $favoriteSourcesRepository;
 
   public function __construct(
     ApiNews $apiNews,
     SourceRepository $sourceRepository,
     CategoryRepository $categoryRepository,
-    EntityManagerInterface $em,
-    FavoriteSourcesRepository $favoriteSourcesRepository
+    EntityManagerInterface $em
   ) {
     $this->apiService = $apiNews;
     $this->sourceRepository = $sourceRepository;
     $this->categoryRepository = $categoryRepository;
     $this->em = $em;
-    $this->favoriteSourcesRepository = $favoriteSourcesRepository;
 
     parent::__construct();
   }
@@ -62,11 +58,6 @@ class ApiSourcesFetchCommand extends Command
     }
 
     $this->em->flush();
-
-    foreach ($sources as $source) {
-      $databaseSource = $this->sourceRepository->createOrRetrieve($source['name']);
-      $this->favoriteSourcesRepository->create($databaseSource);
-    }
 
     $io->success("$total sources persisted");
   }

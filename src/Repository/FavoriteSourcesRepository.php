@@ -20,17 +20,4 @@ class FavoriteSourcesRepository extends ServiceEntityRepository
         parent::__construct($registry, FavoriteSources::class);
     }
 
-    public function create(Source $sourceId)
-    {
-        $favoriteSource = $this->findOneBy($sourceId);
-
-        if ($favoriteSource === null) {
-            $favoriteSource = new FavoriteSources();
-            $favoriteSource->setSource($sourceId);
-
-            $this->_em->persist($favoriteSource);
-            $this->_em->flush();
-        }
-        return null;
-    }
 }
