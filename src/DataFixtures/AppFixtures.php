@@ -48,9 +48,9 @@ class AppFixtures extends Fixture
             $source = new Source();
             $source->setName($sourceNames[$i])
                     ->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)])
-                    ->setApiId($sourceNames[$i])
                     ->setLanguage('fr')
-                    ->setCountry('fr');
+                    ->setCountry('fr')
+                    ->setApiId($sourceNames[$i]);
 
             $manager->persist($source);
 
@@ -75,11 +75,17 @@ class AppFixtures extends Fixture
 
         }
 
-        $favoriteCategories = [];
-        for ($i =0; $i < count($categories); $i++) {
-            $favoriteCategory = new FavoriteCategories();
-            $favoriteCategory->setCategory($categories[$i]);
 
+        $manager->flush();
+
+
+
+        $favoriteCategories = [];
+
+        for ($i =0; $i < count($categories); $i++) {
+        //     $favoriteCategory = new FavoriteCategories();
+        //     $favoriteCategory->setCategory($categories[$i]);
+            $favoriteCategory = $category->getFavorite($categories[$i]);
             
             $manager->persist($favoriteCategory);
             $favoriteCategories[]= $favoriteCategory;
@@ -88,9 +94,9 @@ class AppFixtures extends Fixture
         $favoriteSources = [];
         
         for ($i = 0; $i < count($sources); $i++) {
-            $favoriteSource = new FavoriteSources();
-            $favoriteSource->setSource($sources[$i]);
-
+        //     $favoriteSource = new FavoriteSources();
+        //     $favoriteSource->setSource($sources[$i]);
+            $favoriteSource = $source->getFavorite($sources[$i]);
             
             $manager->persist($favoriteSource);
             $favoriteSources[] = $favoriteSource;
@@ -124,7 +130,6 @@ class AppFixtures extends Fixture
                 ->addFavorite($favoriteSources[$faker->numberBetween(0, count($favoriteSources) - 1)])
                 ->addFavorite($favoriteCategories[$faker->numberBetween(0, count($favoriteCategories) - 1)]);
                 
-            
 
             $manager->persist($user);
             $users[]= $user;

@@ -32,6 +32,10 @@ services:
     App\EventSubscriber\PasswordEncoderSubscriber:
         tags:
             - { name: doctrine.event_subscriber }
+
+    App\EventSubscriber\FavoritesSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber }
             
     App\Doctrine\CurrentUserExtension:
         tags:

@@ -27,15 +27,16 @@ final class ListItemDataTransformer implements DataTransformerInterface
             return null;
         }
 
+        $output = new ListItem();
+
         if ($data instanceof FavoriteCategories) {
-            $output = new ListItem();
+            
             $output->setValue($this->iriConverter->getIriFromItem($data))
                 ->setName($data->getCategory()->getName());
             return $output;
         }
 
         if ($data instanceof FavoriteSources) {
-            $output = new ListItem();
             $output->setValue($this->iriConverter->getIriFromItem($data))
                 ->setName($data->getSource()->getName());
             return $output;
