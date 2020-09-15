@@ -127,6 +127,7 @@ class Source
     public function setFavorite(FavoriteSources $favorite): self
     {
         $this->favorite = $favorite;
+        $favorite->setSource($this);
 
         return $this;
     }

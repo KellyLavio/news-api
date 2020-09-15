@@ -2,6 +2,8 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\Category;
+use App\Entity\FavoriteCategories;
 use App\Entity\FavoriteSources;
 use App\Entity\Source;
 use Doctrine\Common\EventSubscriber;
@@ -13,19 +15,22 @@ class FavoritesSubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return [
-            Events::postPersist
+            Events::prePersist
         ];
     }
 
-    public function postPersist(LifecycleEventArgs $args)
+    public function prePersist(LifecycleEventArgs $args)
     {
-        $source = $args->getObject();
+        $data = $args->getObject();
 
-        if ($source instanceof Source) {
-            $favoriteSource = new FavoriteSources;
-            $favoriteSource->setSource($source);
-            $em = $args->getObjectManager();
-            $em->persist($favoriteSource);
+        if ($data instanceof Source) {
+            $favoriteSource = new FavoriteSources();
+            $data->setFavorite($favoriteSource);
+        }
+
+        if ($data instanceof Category) {
+            $favoriteCategory = new FavoriteCategories();
+            $data->setFavorite($favoriteCategory);
         }
     }
 }

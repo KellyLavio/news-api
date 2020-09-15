@@ -75,6 +75,7 @@ class Category
     public function setFavorite(FavoriteCategories $favorite): self
     {
         $this->favorite = $favorite;
+        $favorite->setCategory($this);
 
         return $this;
     }
