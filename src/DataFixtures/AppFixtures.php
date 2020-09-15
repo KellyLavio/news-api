@@ -34,7 +34,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < count($categorieNames); $i++) {
             $category = new Category();
             $category->setName($categorieNames[$i]);
-
+                    
             $manager->persist($category);
 
             $categories[] = $category;
