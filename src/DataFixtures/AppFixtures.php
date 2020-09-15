@@ -34,7 +34,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < count($categorieNames); $i++) {
             $category = new Category();
             $category->setName($categorieNames[$i]);
-
+                    
             $manager->persist($category);
 
             $categories[] = $category;
@@ -47,7 +47,10 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < count($sourceNames); $i++) {
             $source = new Source();
             $source->setName($sourceNames[$i])
-                    ->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)]);
+                    ->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)])
+                    ->setApiId($sourceNames[$i])
+                    ->setLanguage('fr')
+                    ->setCountry('fr');
 
             $manager->persist($source);
 
