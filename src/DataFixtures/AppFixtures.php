@@ -47,7 +47,10 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < count($sourceNames); $i++) {
             $source = new Source();
             $source->setName($sourceNames[$i])
-                    ->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)]);
+                    ->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)])
+                    ->setLanguage('fr')
+                    ->setCountry('fr')
+                    ->setApiId($sourceNames[$i]);
 
             $manager->persist($source);
 
