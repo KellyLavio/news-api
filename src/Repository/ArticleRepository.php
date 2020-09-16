@@ -26,22 +26,28 @@ class ArticleRepository extends ServiceEntityRepository
      * @param array $article
      * @return void
      */
-    public function createNewArticle(array $article, Source $source)
+    public function createArticleFromApiData(array $article, Source $source, string $url): int
     {
+        $articleEntity = $this->findOneBy(['url' => $url]);
+
+        if ($articleEntity !== null) {
+            return 0;
+        }
         // Formats the date & converts it from string to Datetime
         $replaceDate = substr(substr_replace($article["publishedAt"], ' ', 10, 1), 0, -1);
         $formatedDate = date_create_from_format('Y-m-d H:i:s', $replaceDate);
 
-        $newArticle = new Article();
-        $newArticle->setUrl($article["url"]);
-        $newArticle->setDate($formatedDate);
-        $newArticle->setImageUrl($article["urlToImage"]);
-        $newArticle->setDescription($article["description"]);
-        $newArticle->setTitle($article["title"]);
+        $articleEntity = new Article();
+        $articleEntity->setUrl($article["url"])
+            ->setDate($formatedDate)
+            ->setImageUrl($article["urlToImage"])
+            ->setDescription($article["description"])
+            ->setTitle($article["title"])
+            ->setSource($source);
+        $this->_em->persist($articleEntity);
 
-        $newArticle->setSource($source);
 
-        return $newArticle;
+        return 1;
     }
 
     /*

@@ -42,7 +42,7 @@ class AppFixtures extends Fixture
 
 
         $sources = [];
-        $sourceNames = ['huffington-post', 'bfm', 'lci', 'le monde', 'l\'équipe', '20 minutes', 'les numériques', 'foot mercato', 'boursorama', 'le parisien', 'pure people', 'presse-citron', 'france.tv' ];
+        $sourceNames = ['huffington-post', 'bfmtv', 'lci', 'le monde', 'l\'équipe', '20 minutes', 'les numériques', 'foot mercato', 'boursorama', 'le parisien', 'pure people', 'presse-citron', 'france.tv' ];
 
         for ($i = 0; $i < count($sourceNames); $i++) {
             $source = new Source();
