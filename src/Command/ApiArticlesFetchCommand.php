@@ -61,7 +61,7 @@ class ApiArticlesFetchCommand extends Command
       // $source = $article['source']['name'];
       $url = $article['url'];
       if ($article['source']['id'] !== null) {
-        $source = $this->sourceRepository->createOrRetrieve(strtolower ($article['source']['name']));
+        $source = $this->sourceRepository->createOrRetrieve($article['source']['name']);
         $total += $this->articleRepository->createArticleFromApiData($article, $source, $url);
       }
     }
