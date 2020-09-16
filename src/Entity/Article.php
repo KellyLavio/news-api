@@ -14,7 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"articleRead"}},
- *  collectionOperations={"get"}
+ *  collectionOperations={"get"},
+ *  attributes={"order"={"id":"DESC"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
  * @UniqueEntity("url")
