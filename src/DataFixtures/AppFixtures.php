@@ -64,7 +64,6 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 30; $i++) {
             $article = new Article();
             $article->setUrl($faker->url)
-                    ->setImageUrl($faker->url)
                     ->setDescription($faker->paragraph($faker->numberBetween(1,10)))
                     ->setTitle($faker->words($faker->numberBetween(1,5), true))
                     ->setDate($faker->dateTime)
