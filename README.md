@@ -63,6 +63,10 @@ php bin/console doctrine:fixtures:load
 php bin/console app:fetch-sources
 ```
 
+#### Récupérer les vrais article de l'API externe
+``` bash
+php bin/console app:fetch-articles
+```
 
 ## Récupérez les données via l'API: 
 https://newsapi.org/
