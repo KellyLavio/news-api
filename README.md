@@ -21,6 +21,8 @@ composer install
 symfony server:start
 ```
 
+#### Créez une base de données localement
+
 #### Générer le JWT
 ``` bash 
 mkdir -p config/jwt
@@ -36,18 +38,19 @@ openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_
 openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 ```
 
-#### Créer son compte sur le site de l'API
+#### Créez votre compte sur le site de l'API
 [ApiNews](https://newsapi.org/)
-Afin de récupérer le token que vous mettrez dans votre .env.local
+Afin de récupérer le token que vous mettrez dans votre .env.local.
+Le nombre de requêtes est limité à 500 par utilisateur, par jour.
 
 #### Créez votre .env.local avec:
 ``` env
-DATABASE_URL
-JWT
-APINEWS_TOKEN
+DATABASE_URL=mysql://login_base_de_donnes:mot_de_passe@adresse_base_de_donnes/nom_base_de_donnes
+JWT_PASSPHRASE=phrase_que_vous_avez_définie_précédemment
+APINEWS_TOKEN=token_de_votre_compte
 ```
 
-#### Créez votre base de données
+#### Créez les tables dans votre base de données
 ``` bash 
 php app/console doctrine:migrations:migrate
 ```
@@ -58,31 +61,16 @@ php bin/console doctrine:fixtures:load
 ```
 </br>
 
-#### Récupérer les vraies sources de l'API externe
+#### Récupérez les vraies sources de l'API externe
 ``` bash
 php bin/console app:fetch-sources
 ```
 
-#### Récupérer les vrais article de l'API externe
+#### Récupérez les vrais articles de l'API externe
 ``` bash
 php bin/console app:fetch-articles
-```
-
-## Récupérez les données via l'API: 
-https://newsapi.org/
-Le nombre de requêtes est limité à 500 par utilisateur, par jour.
-</br>  
+``` 
 
 ## Récupérez la partie front de l'application
 https://github.com/KellyGauthier/news-front
 </br>  
-
-## Fonctionalités
-
-### Afficher les favoris dans le news feed principal
-
-![news](images/screenshot.png "news feed favoris")
-
-Si l'utilisateur possède un compte, il lui est possible de selectionner son news feed principal en choisissant d'afficher soit les articles relatifs à ses favoris, soit le news feed par défaut.
-
-
