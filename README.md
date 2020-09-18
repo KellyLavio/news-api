@@ -45,7 +45,7 @@ Le nombre de requêtes est limité à 500 par utilisateur, par jour.
 
 #### Créez votre .env.local avec:
 ``` env
-DATABASE_URL=mysql://login_base_de_donnes:mot_de_passe@adresse_base_de_donnes/nom_base_de_donnes
+DATABASE_URL=mysql://login_base_de_donnes:mot_de_passe@adresse_base_de_donnes/nom_base_de_donnes?serverVersion=5.7
 JWT_PASSPHRASE=phrase_que_vous_avez_définie_précédemment
 APINEWS_TOKEN=token_de_votre_compte
 ```
