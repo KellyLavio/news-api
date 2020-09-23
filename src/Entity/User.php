@@ -7,12 +7,22 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Controller\CurrentUser;
 
 /**
  * @ApiResource(
- *  normalizationContext={"groups"={"userCreate"}
+ *  normalizationContext={
+ *      "groups"={"userCreate"},{"userData"}
  * },
- *  collectionOperations={"post"}
+ *  collectionOperations={
+ *      "post",
+ *      "user_data"={
+ *          "method"="GET",
+ *          "path"="/infos",
+ *          "controller"=CurrentUser::class,
+ *          "normalization_context"={"groups"={"userData"}},
+ *      }
+ *  }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
@@ -28,18 +38,21 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("userCreate")
+     * @Groups("userData")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("userCreate")
+     * @Groups("userData")
      */
     private $firstname;
 
      /**
      * @ORM\Column(type="string", length=255)
      * @Groups("userCreate")
+     * @Groups("userData")
      */
     private $login;
 
@@ -51,12 +64,14 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Favorite", mappedBy="user")
+     * @Groups("userData")
      */
-    private $favorites;
+    protected $favorites;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups("userCreate")
+     * @Groups("userData")
      */
     private $email;
 

@@ -29,23 +29,25 @@ class Category
      * @ORM\Column(type="string", length=255)
      * @Groups("articleRead")
      * @Groups("favoritesCategoriesRead")
+     * @Groups("userData")
      */
     private $name;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="category")
-     * @Groups("favoritesCategoriesRead")
-     */
-    private $articles;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\FavoriteCategories", mappedBy="category", cascade={"persist", "remove"})
      */
     private $favorite;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Source", mappedBy="category")
+     * @Groups("favoritesCategoriesRead")
+     */
+    private $sources;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->sources = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -65,37 +67,6 @@ class Category
         return $this;
     }
 
-    /**
-     * @return Collection|Article[]
-     */
-    public function getArticles(): Collection
-    {
-        return $this->articles;
-    }
-
-    public function addArticle(Article $article): self
-    {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticle(Article $article): self
-    {
-        if ($this->articles->contains($article)) {
-            $this->articles->removeElement($article);
-            // set the owning side to null (unless already changed)
-            if ($article->getCategory() === $this) {
-                $article->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getFavorite(): ?FavoriteCategories
     {
         return $this->favorite;
@@ -104,6 +75,38 @@ class Category
     public function setFavorite(FavoriteCategories $favorite): self
     {
         $this->favorite = $favorite;
+        $favorite->setCategory($this);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Source[]
+     */
+    public function getSources(): Collection
+    {
+        return $this->sources;
+    }
+
+    public function addSource(Source $source): self
+    {
+        if (!$this->sources->contains($source)) {
+            $this->sources[] = $source;
+            $source->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSource(Source $source): self
+    {
+        if ($this->sources->contains($source)) {
+            $this->sources->removeElement($source);
+            // set the owning side to null (unless already changed)
+            if ($source->getCategory() === $this) {
+                $source->setCategory(null);
+            }
+        }
 
         return $this;
     }

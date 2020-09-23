@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\Source;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,9 +20,36 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-    // /**
-    //  * @return Article[] Returns an array of Article objects
-    //  */
+    /**
+     * Return an Article array of objects
+     *
+     * @param array $article
+     * @return void
+     */
+    public function createArticleFromApiData(array $article, Source $source, string $url): int
+    {
+        $articleEntity = $this->findOneBy(['url' => $url]);
+
+        if ($articleEntity !== null) {
+            return 0;
+        }
+        // Formats the date & converts it from string to Datetime
+        $replaceDate = substr(substr_replace($article["publishedAt"], ' ', 10, 1), 0, -1);
+        $formatedDate = date_create_from_format('Y-m-d H:i:s', $replaceDate);
+
+        $articleEntity = new Article();
+        $articleEntity->setUrl($article["url"])
+            ->setDate($formatedDate)
+            ->setImageUrl($article["urlToImage"])
+            ->setDescription($article["description"])
+            ->setTitle($article["title"])
+            ->setSource($source);
+        $this->_em->persist($articleEntity);
+
+
+        return 1;
+    }
+
     /*
     public function findByExampleField($value)
     {
@@ -31,8 +59,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->orderBy('a.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
     */
 

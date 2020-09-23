@@ -7,14 +7,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"articleRead"}},
- *  collectionOperations={"get"}
+ *  collectionOperations={"get"},
+ *  attributes={"order"={"id":"DESC"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
+ * @UniqueEntity("url")
  */
 class Article
 {
@@ -29,10 +33,11 @@ class Article
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="url")
      * @Groups("articleRead")
      * @Groups("favoritesSourcesRead")
      * @Groups("favoritesCategoriesRead")
+     * @Assert\Url
      */
     private $url;
 
@@ -45,13 +50,13 @@ class Article
     private $date;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Groups("articleRead")
      */
     private $imageUrl;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Groups("articleRead")
      * @Groups("favoritesSourcesRead")
      * @Groups("favoritesCategoriesRead")
@@ -73,12 +78,6 @@ class Article
      * @Groups("favoritesCategoriesRead")
      */
     private $comments;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
-     * @Groups("articleRead")
-     */
-    private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Source", inversedBy="articles")
@@ -126,7 +125,7 @@ class Article
         return $this->imageUrl;
     }
 
-    public function setImageUrl(string $imageUrl): self
+    public function setImageUrl(?string $imageUrl): self
     {
         $this->imageUrl = $imageUrl;
 
@@ -138,7 +137,7 @@ class Article
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -184,18 +183,6 @@ class Article
                 $comment->setArticle(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
 
         return $this;
     }

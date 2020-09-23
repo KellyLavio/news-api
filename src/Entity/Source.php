@@ -27,13 +27,16 @@ class Source
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("favoritesSourcesRead")
+     * @Groups("favoritesCategoriesRead")
      * @Groups("articleRead")
+     * @Groups("userData")
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="source", orphanRemoval=true)
      * @Groups("favoritesSourcesRead")
+     * @Groups("favoritesCategoriesRead")
      */
     private $articles;
 
@@ -41,6 +44,27 @@ class Source
      * @ORM\OneToOne(targetEntity="App\Entity\FavoriteSources", mappedBy="source", cascade={"persist", "remove"})
      */
     private $favorite;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="sources")
+     * @Groups("articleRead")
+     */
+    private $category;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $apiId;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $language;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $country;
 
     public function __construct()
     {
@@ -103,6 +127,55 @@ class Source
     public function setFavorite(FavoriteSources $favorite): self
     {
         $this->favorite = $favorite;
+        $favorite->setSource($this);
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getApiId(): ?string
+    {
+        return $this->apiId;
+    }
+
+    public function setApiId(string $apiId): self
+    {
+        $this->apiId = $apiId;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(string $language): self
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): self
+    {
+        $this->country = $country;
 
         return $this;
     }

@@ -23,6 +23,7 @@ class AppFixtures extends Fixture
     {
         $this->encoder = $encoder;
     }
+
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
@@ -33,7 +34,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < count($categorieNames); $i++) {
             $category = new Category();
             $category->setName($categorieNames[$i]);
-
+                    
             $manager->persist($category);
 
             $categories[] = $category;
@@ -41,11 +42,15 @@ class AppFixtures extends Fixture
 
 
         $sources = [];
-        $sourceNames = ['huffington-post', 'bfm', 'lci'];
+        $sourceNames = ['huffington-post', 'bfmtv', 'lci', 'le monde', 'l\'équipe', '20 minutes', 'les numériques', 'foot mercato', 'boursorama', 'le parisien', 'pure people', 'presse-citron', 'france.tv' ];
 
         for ($i = 0; $i < count($sourceNames); $i++) {
             $source = new Source();
-            $source->setName($sourceNames[$i]);
+            $source->setName($sourceNames[$i])
+                    ->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)])
+                    ->setLanguage('fr')
+                    ->setCountry('fr')
+                    ->setApiId($sourceNames[$i]);
 
             $manager->persist($source);
 
@@ -56,14 +61,12 @@ class AppFixtures extends Fixture
         
         $articles = [];
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $article = new Article();
             $article->setUrl($faker->url)
-                    ->setImageUrl($faker->url)
                     ->setDescription($faker->paragraph($faker->numberBetween(1,10)))
                     ->setTitle($faker->words($faker->numberBetween(1,5), true))
                     ->setDate($faker->dateTime)
-                    ->setCategory($categories[$faker->numberBetween(0, count($categories) - 1)])
                     ->setSource($sources[$faker->numberBetween(0, count($sources) - 1)]);
             
             $manager->persist($article);
@@ -71,11 +74,17 @@ class AppFixtures extends Fixture
 
         }
 
-        $favoriteCategories = [];
-        for ($i =0; $i < count($categories); $i++) {
-            $favoriteCategory = new FavoriteCategories();
-            $favoriteCategory->setCategory($categories[$i]);
 
+        $manager->flush();
+
+
+
+        $favoriteCategories = [];
+
+        for ($i =0; $i < count($categories); $i++) {
+        //     $favoriteCategory = new FavoriteCategories();
+        //     $favoriteCategory->setCategory($categories[$i]);
+            $favoriteCategory = $category->getFavorite($categories[$i]);
             
             $manager->persist($favoriteCategory);
             $favoriteCategories[]= $favoriteCategory;
@@ -84,9 +93,9 @@ class AppFixtures extends Fixture
         $favoriteSources = [];
         
         for ($i = 0; $i < count($sources); $i++) {
-            $favoriteSource = new FavoriteSources();
-            $favoriteSource->setSource($sources[$i]);
-
+        //     $favoriteSource = new FavoriteSources();
+        //     $favoriteSource->setSource($sources[$i]);
+            $favoriteSource = $source->getFavorite($sources[$i]);
             
             $manager->persist($favoriteSource);
             $favoriteSources[] = $favoriteSource;
@@ -103,9 +112,7 @@ class AppFixtures extends Fixture
                 ->setEmail("adam.first@gmail.com")
                 ->setLogin("Adam1")
                 ->setRoles(['ROLE_ADMIN'])
-                ->setPassword(
-                    $this->admin,
-                    'AdamFirst')
+                ->setPassword('AdamFirst')
                 ->addFavorite($favoriteSources[$faker->numberBetween(0, count($favoriteSources) - 1)])
                 ->addFavorite($favoriteCategories[$faker->numberBetween(0, count($favoriteCategories) - 1)]);
 
@@ -118,13 +125,10 @@ class AppFixtures extends Fixture
                 ->setFirstname($faker->firstName)
                 ->setEmail($faker->email)
                 ->setLogin($faker->userName)
-                ->setPassword(
-                    $this->user,
-                    $faker->password)
+                ->setPassword($faker->password)
                 ->addFavorite($favoriteSources[$faker->numberBetween(0, count($favoriteSources) - 1)])
                 ->addFavorite($favoriteCategories[$faker->numberBetween(0, count($favoriteCategories) - 1)]);
                 
-            
 
             $manager->persist($user);
             $users[]= $user;

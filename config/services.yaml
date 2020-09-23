@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+  app.apiNewsBaseUrl: "http://newsapi.org/v2"
 
 services:
     # default configuration for services in *this* file
@@ -31,8 +32,19 @@ services:
     App\EventSubscriber\PasswordEncoderSubscriber:
         tags:
             - { name: doctrine.event_subscriber }
+
+    App\EventSubscriber\FavoritesSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber }
             
     App\Doctrine\CurrentUserExtension:
         tags:
             - { name: api_platform.doctrine.orm.query_extension.collection }
             - { name: api_platform.doctrine.orm.query_extension.item }
+
+
+    App\ApiNews\ApiNews:
+        arguments:
+            $apiKey: '%env(APINEWS_TOKEN)%'
+            $baseUrl: '%app.apiNewsBaseUrl%'
+
